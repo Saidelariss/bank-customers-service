@@ -5,6 +5,7 @@ import com.bank.customers.adapter.inbound.web.dto.CustomerResponse;
 import com.bank.customers.application.port.inbound.CreateCustomerUseCase;
 import com.bank.customers.application.port.inbound.GetCustomerUseCase;
 import com.bank.customers.domain.model.CustomerId;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,13 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/customers")
+@AllArgsConstructor
 public class CustomerController {
     private final CreateCustomerUseCase createCustomer;
     private final GetCustomerUseCase getCustomer;
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Map<String, UUID> create(@RequestBody CreateCustomerRequest request){
         CustomerId customerId = createCustomer.create(request.firstName(), request.lastName(), request.email());
         return Map.of("id",customerId.value());

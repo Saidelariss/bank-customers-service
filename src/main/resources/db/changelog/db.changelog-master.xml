@@ -4,8 +4,8 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
 
 
-    <changeSet id="001-customers" author="you">
-        <createTable tableName="customer">
+    <changeSet id="001-customers" author="said el ariss el idrissi">
+        <createTable tableName="customers">
             <column name="id" type="UUID"><constraints primaryKey="true" nullable="false"/></column>
             <column name="first_name" type="VARCHAR(100)"><constraints nullable="false"/></column>
             <column name="last_name" type="VARCHAR(100)"><constraints nullable="false"/></column>
@@ -13,7 +13,7 @@
             <column name="status" type="VARCHAR(16)" defaultValue="ACTIVE"/>
             <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
         </createTable>
-        <createIndex tableName="customer" indexName="idx_customer_email">
+        <createIndex tableName="customers" indexName="idx_customer_email">
             <column name="email"/>
         </createIndex>
     </changeSet>
