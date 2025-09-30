@@ -25,15 +25,14 @@ public class CustomerJpaEntity {
     private String firstName;
     private String lastName;
     private String email;
-    private Instant createdAtd = Instant.now();
+    private Instant createdAt;
 
 
-
-    public static CustomerJpaEntity toEntity(Customer customer){
-        return new CustomerJpaEntity(customer.id().value(),customer.firstName(),customer.lastName(),customer.email(),customer.createdAt());
+    public static CustomerJpaEntity toEntity(Customer customer) {
+        return new CustomerJpaEntity(customer.id().value(), customer.firstName(), customer.lastName(), customer.email(), customer.createdAt());
     }
 
-    public Customer toDomain(){
-        return new Customer(new CustomerId(this.getId()),this.getFirstName(),this.getLastName(),this.getEmail(),this.getCreatedAtd());
+    public Customer toDomain() {
+        return new Customer(new CustomerId(this.getId()), this.getFirstName(), this.getLastName(), this.getEmail(), this.getCreatedAt());
     }
 }
