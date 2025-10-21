@@ -1,7 +1,7 @@
-package com.bank.customers.adapter.inbound.web;
+package com.bank.customers.infrastructure.adapter.inbound.web;
 
-import com.bank.customers.adapter.inbound.web.dto.CreateCustomerRequest;
-import com.bank.customers.adapter.inbound.web.dto.CustomerResponse;
+import com.bank.customers.infrastructure.adapter.inbound.web.dto.CreateCustomerRequest;
+import com.bank.customers.infrastructure.adapter.inbound.web.dto.CustomerResponse;
 import com.bank.customers.application.port.inbound.CreateCustomerUseCase;
 import com.bank.customers.application.port.inbound.GetCustomerUseCase;
 import com.bank.customers.application.port.inbound.GetCustomersUseCase;

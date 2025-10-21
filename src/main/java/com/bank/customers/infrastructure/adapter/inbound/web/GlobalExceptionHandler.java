@@ -1,4 +1,4 @@
-package com.bank.customers.adapter.inbound.web;
+package com.bank.customers.infrastructure.adapter.inbound.web;
 
 import com.bank.customers.domain.exception.EmailAlreadyExistsException;
 import org.springframework.http.HttpStatus;

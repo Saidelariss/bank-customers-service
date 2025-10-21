@@ -1,4 +1,4 @@
-package com.bank.customers.adapter.inbound.web.dto;
+package com.bank.customers.infrastructure.adapter.inbound.web.dto;
 
 import java.time.Instant;
 import java.util.UUID;

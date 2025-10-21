@@ -1,4 +1,4 @@
-package com.bank.customers.adapter.outbound.persistence;
+package com.bank.customers.infrastructure.adapter.outbound.persistence;
 
 import com.bank.customers.application.port.outbound.LoadCustomerPort;
 import com.bank.customers.application.port.outbound.LoadCustomersPort;

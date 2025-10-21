@@ -1,4 +1,4 @@
-package com.bank.customers.adapter.outbound.persistence;
+package com.bank.customers.infrastructure.adapter.outbound.persistence;
 
 import com.bank.customers.domain.model.Customer;
 import com.bank.customers.domain.model.CustomerId;
