@@ -14,6 +14,9 @@ spring:
   h2:
     console:
       enabled: true
+  batch:
+    jdbc:
+      initialize-schema: always
 server:
   port: 8081
 management:

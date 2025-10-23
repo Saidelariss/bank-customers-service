@@ -38,7 +38,7 @@ public class CustomerImportBatchBeans {
 
         var tokenizer = new DelimitedLineTokenizer();
         tokenizer.setDelimiter(",");
-        tokenizer.setNames("id", "firstName", "lastName", "email", "status", "createdAt");
+        tokenizer.setNames("id", "firstName", "lastName", "email", "createdAt");
 
         var fieldSetMapper = new BeanWrapperFieldSetMapper<CustomerCsv>();
         fieldSetMapper.setTargetType(CustomerCsv.class);
@@ -56,9 +56,8 @@ public class CustomerImportBatchBeans {
         var writer = new JdbcBatchItemWriter<CustomerCsv>();
         writer.setDataSource(dataSource);
         writer.setSql("""
-                INSERT INTO customers (id, first_name, last_name, email, status, created_at)
-                VALUES (CAST(:id AS UUID), :firstName, :lastName, :email, :status, CAST(:createdAt AS TIMESTAMP))
-                ON CONFLICT (email) DO NOTHING
+                INSERT INTO customers (id, first_name, last_name, email, created_at)
+                VALUES (CAST(:id AS UUID), :firstName, :lastName, :email, CAST(:createdAt AS TIMESTAMP))
                 """);
         writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
         return writer;
