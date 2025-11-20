@@ -1,11 +1,14 @@
 package com.bank.customers.infrastructure.adapter.inbound.web;
 
-import com.bank.customers.infrastructure.adapter.inbound.web.dto.CreateCustomerRequest;
-import com.bank.customers.infrastructure.adapter.inbound.web.dto.CustomerResponse;
 import com.bank.customers.application.port.inbound.CreateCustomerUseCase;
 import com.bank.customers.application.port.inbound.GetCustomerUseCase;
 import com.bank.customers.application.port.inbound.GetCustomersUseCase;
+import com.bank.customers.application.port.inbound.UpdateCustomerUseCase;
+import com.bank.customers.domain.model.Customer;
 import com.bank.customers.domain.model.CustomerId;
+import com.bank.customers.infrastructure.adapter.inbound.web.dto.CreateCustomerRequest;
+import com.bank.customers.infrastructure.adapter.inbound.web.dto.CustomerResponse;
+import com.bank.customers.infrastructure.adapter.inbound.web.dto.UpdateCustomerRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,7 @@ public class CustomerController {
     private final CreateCustomerUseCase createCustomer;
     private final GetCustomerUseCase getCustomer;
     private final GetCustomersUseCase getCustomers;
+    private final UpdateCustomerUseCase updateCustomer;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -48,6 +52,18 @@ public class CustomerController {
                                 customer.email(),
                                 customer.createdAt()))
                 .toList();
+
+    }
+
+    @PutMapping()
+    public CustomerResponse updateCustomer(@RequestBody UpdateCustomerRequest request) {
+
+        Customer customer = updateCustomer.update(new CustomerId(UUID.fromString(request.id())),
+                request.firstName(),
+                request.lastName(),
+                request.email());
+
+        return new CustomerResponse(customer.id().value(), customer.firstName(), customer.lastName(), customer.email(), customer.createdAt());
 
     }
 }
