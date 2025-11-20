@@ -1,5 +1,6 @@
 package com.bank.customers.infrastructure.adapter.inbound.web;
 
+import com.bank.customers.domain.exception.CustomerNotFoundException;
 import com.bank.customers.domain.exception.EmailAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,15 @@ public class GlobalExceptionHandler {
     ResponseEntity<Map<String,Object>> handleEmailAlreadyExists(EmailAlreadyExistsException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
                 "error","email already exists",
+                "message",ex.getMessage(),
+                "timestamp", Instant.now()
+        ));
+    }
+
+    @ExceptionHandler(CustomerNotFoundException.class)
+    ResponseEntity<Map<String,Object>> handleCustomerNotFound(CustomerNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                "error","customer not found",
                 "message",ex.getMessage(),
                 "timestamp", Instant.now()
         ));

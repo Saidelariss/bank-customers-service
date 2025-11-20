@@ -57,7 +57,6 @@ public class CustomerController {
 
     @PutMapping()
     public CustomerResponse updateCustomer(@RequestBody UpdateCustomerRequest request) {
-
         Customer customer = updateCustomer.update(new CustomerId(UUID.fromString(request.id())),
                 request.firstName(),
                 request.lastName(),
