@@ -7,11 +7,12 @@ import com.bank.customers.infrastructure.adapter.inbound.web.dto.CreateCustomerR
 import com.bank.customers.infrastructure.adapter.inbound.web.dto.CustomerResponse;
 import com.bank.customers.infrastructure.adapter.inbound.web.dto.UpdateCustomerRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -24,6 +25,7 @@ public class CustomerController {
     private final GetCustomersUseCase getCustomers;
     private final UpdateCustomerUseCase updateCustomer;
     private final DeleteCustomerUseCase deleteCustomerUseCase;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Map<String, UUID>> create(@RequestBody CreateCustomerRequest request) {
@@ -39,17 +41,14 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<CustomerResponse> getCustomers() {
-        return getCustomers.getAll()
-                .stream()
+    public Page<CustomerResponse> getCustomers(Pageable pageable) {
+        return getCustomers.getAll(pageable)
                 .map(customer ->
                         new CustomerResponse(customer.id().value(),
                                 customer.firstName(),
                                 customer.lastName(),
                                 customer.email(),
-                                customer.createdAt()))
-                .toList();
-
+                                customer.createdAt()));
     }
 
     @PutMapping
@@ -64,7 +63,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCustomer(@PathVariable String id){
+    public ResponseEntity<String> deleteCustomer(@PathVariable String id) {
         deleteCustomerUseCase.delete(new CustomerId(UUID.fromString(id)));
         return ResponseEntity.ok("User deleted successfully");
 

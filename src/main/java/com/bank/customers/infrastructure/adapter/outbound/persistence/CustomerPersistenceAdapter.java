@@ -7,6 +7,8 @@ import com.bank.customers.application.port.outbound.SaveCustomerPort;
 import com.bank.customers.domain.model.Customer;
 import com.bank.customers.domain.model.CustomerId;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -35,8 +37,8 @@ public class CustomerPersistenceAdapter implements SaveCustomerPort, LoadCustome
     }
 
     @Override
-    public List<Customer> loadAll() {
-        return customerJpaRepository.findAll().stream().map(CustomerJpaEntity::toDomain).toList();
+    public Page<Customer> loadAll(Pageable pageable) {
+        return customerJpaRepository.findAll(pageable).map(CustomerJpaEntity::toDomain);
     }
 
     @Override
