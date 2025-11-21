@@ -1,5 +1,6 @@
 package com.bank.customers.infrastructure.adapter.outbound.persistence;
 
+import com.bank.customers.application.port.outbound.DeleteCustomerPort;
 import com.bank.customers.application.port.outbound.LoadCustomerPort;
 import com.bank.customers.application.port.outbound.LoadCustomersPort;
 import com.bank.customers.application.port.outbound.SaveCustomerPort;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
-public class CustomerPersistenceAdapter implements SaveCustomerPort, LoadCustomerPort, LoadCustomersPort {
+public class CustomerPersistenceAdapter implements SaveCustomerPort, LoadCustomerPort, LoadCustomersPort, DeleteCustomerPort {
     private final CustomerJpaRepository customerJpaRepository;
 
     @Override
@@ -36,5 +37,10 @@ public class CustomerPersistenceAdapter implements SaveCustomerPort, LoadCustome
     @Override
     public List<Customer> loadAll() {
         return customerJpaRepository.findAll().stream().map(CustomerJpaEntity::toDomain).toList();
+    }
+
+    @Override
+    public void deleteById(CustomerId id) {
+        customerJpaRepository.deleteById(id.value());
     }
 }

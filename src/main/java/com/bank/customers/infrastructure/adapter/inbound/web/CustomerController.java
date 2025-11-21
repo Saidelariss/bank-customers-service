@@ -1,9 +1,6 @@
 package com.bank.customers.infrastructure.adapter.inbound.web;
 
-import com.bank.customers.application.port.inbound.CreateCustomerUseCase;
-import com.bank.customers.application.port.inbound.GetCustomerUseCase;
-import com.bank.customers.application.port.inbound.GetCustomersUseCase;
-import com.bank.customers.application.port.inbound.UpdateCustomerUseCase;
+import com.bank.customers.application.port.inbound.*;
 import com.bank.customers.domain.model.Customer;
 import com.bank.customers.domain.model.CustomerId;
 import com.bank.customers.infrastructure.adapter.inbound.web.dto.CreateCustomerRequest;
@@ -26,7 +23,7 @@ public class CustomerController {
     private final GetCustomerUseCase getCustomer;
     private final GetCustomersUseCase getCustomers;
     private final UpdateCustomerUseCase updateCustomer;
-
+    private final DeleteCustomerUseCase deleteCustomerUseCase;
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Map<String, UUID>> create(@RequestBody CreateCustomerRequest request) {
@@ -55,7 +52,7 @@ public class CustomerController {
 
     }
 
-    @PutMapping()
+    @PutMapping
     public CustomerResponse updateCustomer(@RequestBody UpdateCustomerRequest request) {
         Customer customer = updateCustomer.update(new CustomerId(UUID.fromString(request.id())),
                 request.firstName(),
@@ -63,6 +60,13 @@ public class CustomerController {
                 request.email());
 
         return new CustomerResponse(customer.id().value(), customer.firstName(), customer.lastName(), customer.email(), customer.createdAt());
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCustomer(@PathVariable String id){
+        deleteCustomerUseCase.delete(new CustomerId(UUID.fromString(id)));
+        return ResponseEntity.ok("User deleted successfully");
 
     }
 }
