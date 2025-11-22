@@ -7,8 +7,10 @@ import com.bank.customers.infrastructure.adapter.inbound.web.dto.CreateCustomerR
 import com.bank.customers.infrastructure.adapter.inbound.web.dto.CustomerResponse;
 import com.bank.customers.infrastructure.adapter.inbound.web.dto.UpdateCustomerRequest;
 import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +43,9 @@ public class CustomerController {
     }
 
     @GetMapping
-    public Page<CustomerResponse> getCustomers(Pageable pageable) {
+    public Page<CustomerResponse> getCustomers(@ParameterObject
+                                               @PageableDefault(page = 0, size = 10, sort = "firstName,asc")
+                                               Pageable pageable) {
         return getCustomers.getAll(pageable)
                 .map(customer ->
                         new CustomerResponse(customer.id().value(),
